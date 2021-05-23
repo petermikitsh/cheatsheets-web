@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+</head>
+
+<body>
+  <my-el></my-el>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/3.12.1/minified.js"></script>
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.5.0/webcomponents-bundle.js"></script>
+  <!-- Globals are "React", "ReactDOM", "MaterialUI", "emotionReact", "styled", "jss" -->
+  <script src="https://unpkg.com/react@16.14.0/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@16.14.0/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@material-ui/core@4.11.4/umd/material-ui.development.js"></script>
+  <script src="https://unpkg.com/@emotion/react@11.4.0/dist/emotion-react.umd.min.js"></script>
+  <script src="https://unpkg.com/react-is/umd/react-is.production.min.js"></script>
+  <script src="https://unpkg.com/styled-components@5.3.0/dist/styled-components.min.js"></script>
+  <script src="https://unpkg.com/jss@10.6.0/dist/jss.js"></script>
+  <script src="https://unpkg.com/url-search-params-polyfill@8.1.1/index.js"></script>
+
+  <!-- Integration issue presents w/ MooTools 1.11 and webcomponents polyfill; all the 'nocompat' versions work fine -->
+  <!-- Add mootools if query param is present -->
+  <script id="mootools"></script>
+  <script id="checkForMooTools">
+    var loadMooTools = new URLSearchParams(window.location.search).get('mootools') === '1';
+    var script = document.getElementById('mootools');
+    if (loadMooTools) {
+      script.setAttribute('src', 'http://ajax.googleapis.com/ajax/libs/mootools/1.11/mootools.js');
+      script.async = false;
+    } else {
+      script.setAttribute('src', 'main.iframe.bundle.js');
+    }
+  </script>
+  <!-- <script src="http://ajax.googleapis.com/ajax/libs/mootools/1.11/mootools.js"></script> -->
+  <!-- <script src="http://ajax.googleapis.com/ajax/libs/mootools/1.11/mootools-nocompat.js"></script> -->
+  <!-- <script src="http://ajax.googleapis.com/ajax/libs/mootools/1.2.6-nocompat/mootools.js"></script> -->
+  <!-- <script src="http://ajax.googleapis.com/ajax/libs/mootools/1.3.2/mootools.js"></script> -->
+  <!-- <script src="http://ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools.js"></script> -->
+  <!-- <script src="http://ajax.googleapis.com/ajax/libs/mootools/1.5.2/mootools.js"></script> -->
+  <!-- <script src="http://ajax.googleapis.com/ajax/libs/mootools/1.6.0/mootools.js"></script> -->
+  <!-- <script src="http://ajax.googleapis.com/ajax/libs/mootools/1.6.0/mootools-nocompat.js"></script> -->
+
+  <style>
+    /* Demo styles won't bleed into shadow DOM */
+    button {
+      background-color: green;
+    }
+  </style>
+  <script>
+    document.getElementById('mootools').addEventListener('load', function () {
+      function MyEl() {
+        return Reflect.construct(HTMLElement, [], this.constructor);
+      }
+
+      MyEl.prototype = Object.create(HTMLElement.prototype);
+      MyEl.prototype.constructor = MyEl;
+      Object.setPrototypeOf(MyEl, HTMLElement);
+
+      MyEl.prototype.connectedCallback = function () {
+        var shadowRoot = this.attachShadow({ mode: "open" });
+        var jssRoot = document.createElement("span");
+        var emotionRoot = document.createElement("style");
+        var mountPoint = document.createElement("div");
+        mountPoint.style.display = 'flex';
+        mountPoint.style.alignItems = 'center';
+        var styledComponentsMount = document.createElement("div");
+
+        shadowRoot.appendChild(jssRoot);
+        shadowRoot.appendChild(emotionRoot);
+        shadowRoot.appendChild(mountPoint);
+        shadowRoot.appendChild(styledComponentsMount);
+
+        var jssStyleProvider = window.jss.create(Object.assign({}, MaterialUI.jssPreset(), { insertionPoint: jssRoot }));
+
+        var helloText = 'hello world from React!!';
+        var icon = React.createElement("svg", {
+          width: 24,
+          height: 24,
+          viewBox: "0 0 24 24"
+        }, React.createElement("path", {
+          fill: "#f00",
+          d: "M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        }));
+
+        var fullMuiExample = React.createElement(MaterialUI.StylesProvider, {
+          jss: jssStyleProvider
+        }, React.createElement(MaterialUI.ThemeProvider, {
+          theme: MaterialUI.createMuiTheme({ theme: 'dark' })
+        }, React.createElement(MaterialUI.Button, { color: 'primary' }, "foobar")));
+
+        ReactDOM.render([helloText, icon, fullMuiExample], mountPoint);
+
+      };
+      customElements.define('my-el', MyEl);
+    });
+
+  </script>
+
+</body>
+
+</html>
