@@ -1,0 +1,33 @@
+{
+  "name": "cheatsheets-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "start-storybook -p 4000 -s ./static",
+    "build": "build-storybook -s ./static",
+    "deploy": "gh-pages -d storybook-static"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/petermikitsh/cheatsheets-web.git"
+  },
+  "author": "Peter Mikitsh",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/petermikitsh/cheatsheets-web/issues"
+  },
+  "homepage": "https://github.com/petermikitsh/cheatsheets-web#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@storybook/addon-actions": "^6.2.9",
+    "@storybook/addon-essentials": "^6.2.9",
+    "@storybook/addon-links": "^6.2.9",
+    "@storybook/react": "^6.2.9",
+    "babel-loader": "^8.2.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "typescript": "^4.2.4"
+  }
+}
