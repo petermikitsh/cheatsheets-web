@@ -6,7 +6,8 @@
   "scripts": {
     "start": "start-storybook -p 4000 -s ./static",
     "build": "build-storybook -s ./static",
-    "deploy": "gh-pages -d storybook-static"
+    "deploy": "gh-pages -d storybook-static",
+    "postinstall": "patch-package"
   },
   "repository": {
     "type": "git",
@@ -25,8 +26,12 @@
     "@storybook/addon-essentials": "^6.2.9",
     "@storybook/addon-links": "^6.2.9",
     "@storybook/react": "^6.2.9",
+    "@webcomponents/webcomponentsjs": "^2.5.0",
     "babel-loader": "^8.2.2",
+    "copy-webpack-plugin": "^6",
     "gh-pages": "^3.1.0",
+    "patch-package": "^6.4.7",
+    "postinstall-postinstall": "^2.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "typescript": "^4.2.4"

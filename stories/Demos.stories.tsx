@@ -34,3 +34,15 @@ export const WebComponentsMooToolsIE11: Story = () => (
     src="WebComponentsIE11.html?mootools=1"
   />
 );
+
+export const WebComponentPatchedPolyfill: Story = () => (
+  <iframe
+    frameBorder="0"
+    style={{
+      display: "block",
+      width: "100%",
+      height: "100vh",
+    }}
+    src="WebComponentPatch.html"
+  />
+);
